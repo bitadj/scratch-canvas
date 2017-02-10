@@ -17,9 +17,12 @@ var line_history = [];
 
 // event-handler for new incoming connections
 io.on('connection', function (socket) {
-
+  // console.log(socket);
+  
    // send drawing history to the new client
    for (var i in line_history) {
+    //  console.log(line_history[i]);
+     
       socket.emit('draw_line', { line: line_history[i] } );
    }
 

@@ -13,8 +13,8 @@ document.addEventListener("DOMContentLoaded", () => {
    let socket  = io.connect();
 
    // set canvas to full browser width/height
-   canvas.width = width;
-   canvas.height = height;
+  //  canvas.width = width;
+  //  canvas.height = height;
 
    // register mouse event handlers
    canvas.onmousedown = (e) => { mouse.click = true; };
@@ -22,8 +22,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
    canvas.onmousemove = (e) => {
       // normalize mouse position to range 0.0 - 1.0
-      mouse.pos.x = e.clientX / width;
-      mouse.pos.y = e.clientY / height;
+      // mouse.pos.x = e.clientX / width;
+      // mouse.pos.y = e.clientY / height;
+      console.log('X ', e.clientX);
+      
+      mouse.pos.x = e.clientX;
+      mouse.pos.y = e.clientY;
       mouse.move = true;
    };
 
@@ -31,8 +35,10 @@ document.addEventListener("DOMContentLoaded", () => {
 	socket.on('draw_line', (data) => {
       let line = data.line;
       context.beginPath();
-      context.moveTo(line[0].x * width, line[0].y * height);
-      context.lineTo(line[1].x * width, line[1].y * height);
+      // context.moveTo(line[0].x * width, line[0].y * height);
+      // context.lineTo(line[1].x * width, line[1].y * height);
+      context.moveTo(line[0].x, line[0].y);
+      context.lineTo(line[1].x, line[1].y);
       context.stroke();
    });
    
@@ -45,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
          mouse.move = false;
       }
       mouse.pos_prev = {x: mouse.pos.x, y: mouse.pos.y};
-      setTimeout(mainLoop, 25);
+      setTimeout(mainLoop, 1);
    }
    mainLoop();
 });
